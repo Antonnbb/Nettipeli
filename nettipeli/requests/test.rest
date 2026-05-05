@@ -1,0 +1,33 @@
+### Register
+POST http://localhost:3001/register
+Content-Type: application/json
+
+{
+  "username": "testi",
+  "password": "1234"
+}
+
+### Login
+POST http://localhost:3001/login
+Content-Type: application/json
+
+{
+  "username": "testi",
+  "password": "1234"
+}
+
+### Add score
+POST http://localhost:3001/scores
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "game_type": "tracking",
+  "score": 500,
+  "accuracy": null,
+  "reaction_time": null,
+  "duration": 10
+}
+
+### Leaderboard
+GET http://localhost:3001/leaderboard/tracking
