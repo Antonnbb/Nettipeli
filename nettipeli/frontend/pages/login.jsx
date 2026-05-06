@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import './authentication.css'
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -22,24 +23,27 @@ export default function Login() {
 
 
     return (
-        <div>
-            <h1>Login</h1>
+  <div className="auth-page">
+    <div className="auth-card">
+      <h1>Login</h1>
 
-            <input
-                placeholder="Username"
-                onChange={(e) => setUsername(e.target.value)}
-            />
+      <input
+        placeholder="Username"
+        onChange={(e) => setUsername(e.target.value)}
+      />
 
-            <input
-                placeholder="Password"
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-            />
+      <input
+        placeholder="Password"
+        type="password"
+        onChange={(e) => setPassword(e.target.value)}
+      />
 
-            <button onClick={login}>Login</button>
-            <p>
-                Ei tiliä? <Link to="/register">Rekisteröidy</Link>
-            </p>
-        </div>
-    );
+      <button onClick={login}>Login</button>
+
+      <p>
+        Ei tiliä? <Link to="/register">Rekisteröidy</Link>
+      </p>
+    </div>
+  </div>
+);
 }
