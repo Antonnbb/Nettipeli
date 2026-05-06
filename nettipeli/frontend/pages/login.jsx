@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -15,7 +16,7 @@ export default function Login() {
         localStorage.setItem("token", res.data.token);
 
         alert("Kirjauduttu sisään!");
-        
+
         window.location.href = "/home";
     };
 
@@ -36,6 +37,9 @@ export default function Login() {
             />
 
             <button onClick={login}>Login</button>
+            <p>
+                Ei tiliä? <Link to="/register">Rekisteröidy</Link>
+            </p>
         </div>
     );
 }
