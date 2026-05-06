@@ -7,6 +7,7 @@ import Leaderboard from '/pages/leaderboard.jsx'
 import Login from '/pages/login.jsx'
 import ReactionTest from '/pages/reactiontest.jsx'
 import Register from '/pages/register.jsx'
+import AimTraining from '/pages/aimtraining.jsx'
 
 function ProtectedRoute({ children }) {
   const user = localStorage.getItem("user");
@@ -28,6 +29,7 @@ function App() {
         <Route path="/tracking" element={<ProtectedRoute><TrackingTest /></ProtectedRoute>} />
         <Route path="/reaction" element={<ProtectedRoute><ReactionTest /></ProtectedRoute>} />
         <Route path="/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
+        <Route path="/aim" element={<ProtectedRoute><AimTraining /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );
