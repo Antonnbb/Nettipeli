@@ -8,6 +8,7 @@ export default function Home() {
       <Link to="/leaderboard">Leaderboard</Link>
       <Link to="/login">Login</Link>
       <Link to="/reaction">Reaction Test</Link><br />
+      <Link to="/register">Register</Link><br />
     </div>
   );
 }
