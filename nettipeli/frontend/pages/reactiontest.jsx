@@ -1,76 +1,83 @@
 import { useState } from "react";
-import axios from "axios";
+import './reactiontest.css';
 
 export default function ReactionTest() {
-    const [state, setState] = useState("idle"); // idle, waiting, ready
-    const [startTime, setStartTime] = useState(0);
-    const [result, setResult] = useState(null);
+  const [state, setState] = useState("idle");
+  const [startTime, setStartTime] = useState(0);
+  const [results, setResults] = useState([]);
+  const [message, setMessage] = useState("Click Anywhere to Start");
 
-    const startGame = () => {
-        setState("waiting");
-        setResult(null);
+  const [timeoutId, setTimeoutId] = useState(null);
 
-        const delay = Math.random() * 2000 + 1000;
+  const startRound = () => {
+    setState("waiting");
+    setMessage("Wait for green...");
+
+    const delay = Math.random() * 4000 + 3000;
+
+    const id = setTimeout(() => {
+      setState("ready");
+      setStartTime(Date.now());
+      setMessage("CLICK!");
+    }, delay);
+
+    setTimeoutId(id);
+  };
+
+  const handleClick = async () => {
+    if (state === "idle") {
+      startRound();
+      return;
+    }
+
+    if (state === "waiting") {
+      clearTimeout(timeoutId);
+      setMessage("Too soon!");
+      setTimeout(startRound, 1000);
+      return;
+    }
+
+    if (state === "ready") {
+      const time = Date.now() - startTime;
+      const newResults = [...results, time];
+
+      setMessage(`${time} ms`);
+
+      if (newResults.length === 5) {
+        const avg =
+          newResults.reduce((a, b) => a + b, 0) / newResults.length;
 
         setTimeout(() => {
-            setState("ready");
-            setStartTime(Date.now());
-        }, delay);
-    };
+          setMessage(`Average: ${Math.round(avg)} ms`);
+        }, 1000);
 
-    const handleClick = async () => {
-        if (state === "waiting") {
-            setResult("Liian aikaisin!");
-            setState("idle");
-        }
+        setResults([]);
+        setState("idle");
+      } else {
+        setResults(newResults);
+        setState("idle");
+        setTimeout(startRound, 1000);
+      }
+    }
+  };
 
-        if (state === "ready") {
-            const reactionTime = Date.now() - startTime;
-            setResult(reactionTime);
-            setState("idle");
+  return (
+    <div className="rt-page">
+      <h2>⚡ Reaction Test</h2>
+      <p>Click as quickly as you can when the screen turns green</p>
 
-            const user = JSON.parse(localStorage.getItem("user"));
+      <div className="rt-stats">
+        <div className="stat">Best Time<br />---</div>
+        <div className="stat">Average<br />---</div>
+        <div className="stat">Attempts<br />{results.length}</div>
+      </div>
 
-            if (!user) {
-                alert("Kirjaudu ensin sisään!");
-                return;
-            }
-
-            await axios.post("http://localhost:3001/scores", {
-                user_id: user.id,
-                game_type: "reaction",
-                score: reactionTime,
-                reaction_time: reactionTime
-            });
-        }
-    };
-
-    return (
-        <div>
-            <h2>Reaction Test</h2>
-
-            <div
-                onClick={handleClick}
-                style={{
-                    width: "300px",
-                    height: "200px",
-                    background:
-                        state === "ready" ? "green" :
-                            state === "waiting" ? "red" : "gray",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer"
-                }}
-            >
-                {state === "idle" && "Klikkaa aloittaaksesi"}
-                {state === "waiting" && "Odota..."}
-                {state === "ready" && "KLIKKAA!"}
-            </div>
-
-            <button onClick={startGame}>Start</button>
-
-            {result && <p>Tulos: {result} ms</p>}
-        </div>
-    );
+      <div
+        className={`rt-box ${state}`}
+        onClick={handleClick}
+      >
+        {message}
+      </div>
+    </div>
+  );
 }
