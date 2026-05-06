@@ -6,6 +6,7 @@ import TrackingTest from '/pages/trackingtest.jsx'
 import Leaderboard from '/pages/leaderboard.jsx'
 import Login from '/pages/login.jsx'
 import ReactionTest from '/pages/reactiontest.jsx'
+import Register from "./pages/register";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/tracking" element={<TrackingTest />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/reaction" element={<ReactionTest />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );
