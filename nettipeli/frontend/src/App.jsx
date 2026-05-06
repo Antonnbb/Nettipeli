@@ -6,7 +6,7 @@ import TrackingTest from '/pages/trackingtest.jsx'
 import Leaderboard from '/pages/leaderboard.jsx'
 import Login from '/pages/login.jsx'
 import ReactionTest from '/pages/reactiontest.jsx'
-import Register from "./pages/register";
+import Register from '/pages/register.jsx'
 
 
 function App() {
