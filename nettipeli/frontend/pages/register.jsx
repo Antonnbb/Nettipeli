@@ -12,7 +12,9 @@ export default function Register() {
     });
 
     alert("Käyttäjä luotu! Voit nyt kirjautua.");
+    window.location.href = "/login";
   };
+
 
   return (
     <div>
