@@ -18,6 +18,7 @@
 .logo span {
   background: linear-gradient(90deg, #4f46e5, #ec4899);
   -webkit-background-clip: text;
+   background-clip: text;
   color: transparent;
 }
 
