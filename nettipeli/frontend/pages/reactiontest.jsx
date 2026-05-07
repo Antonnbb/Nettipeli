@@ -1,83 +1,132 @@
 import { useState } from "react";
-import './reactiontest.css';
+import "./reactiontest.css";
 
 export default function ReactionTest() {
-  const [state, setState] = useState("idle");
-  const [startTime, setStartTime] = useState(0);
-  const [results, setResults] = useState([]);
-  const [message, setMessage] = useState("Click Anywhere to Start");
+    const [state, setState] = useState("idle");
+    const [startTime, setStartTime] = useState(0);
+    const [results, setResults] = useState([]);
+    const [message, setMessage] = useState("Click Anywhere to Start");
 
-  const [timeoutId, setTimeoutId] = useState(null);
+    const [timeoutId, setTimeoutId] = useState(null);
 
-  const startRound = () => {
-    setState("waiting");
-    setMessage("Wait for green...");
+    const [best, setBest] = useState(null);
+    const [average, setAverage] = useState(null);
+    const [finished, setFinished] = useState(false);
 
-    const delay = Math.random() * 4000 + 3000;
+    const startRound = () => {
+        setState("waiting");
+        setMessage("Wait for green...");
 
-    const id = setTimeout(() => {
-      setState("ready");
-      setStartTime(Date.now());
-      setMessage("CLICK!");
-    }, delay);
+        const delay = Math.random() * 4000 + 3000;
 
-    setTimeoutId(id);
-  };
+        const id = setTimeout(() => {
+            setState("ready");
+            setStartTime(Date.now());
+            setMessage("CLICK!");
+        }, delay);
 
-  const handleClick = async () => {
-    if (state === "idle") {
-      startRound();
-      return;
-    }
+        setTimeoutId(id);
+    };
 
-    if (state === "waiting") {
-      clearTimeout(timeoutId);
-      setMessage("Too soon!");
-      setTimeout(startRound, 1000);
-      return;
-    }
+    const handleClick = async () => {
+        if (finished) return;
 
-    if (state === "ready") {
-      const time = Date.now() - startTime;
-      const newResults = [...results, time];
+        if (state === "idle") {
+            startRound();
+            return;
+        }
 
-      setMessage(`${time} ms`);
+        if (state === "waiting") {
+            clearTimeout(timeoutId);
+            setMessage("Too soon!");
 
-      if (newResults.length === 5) {
-        const avg =
-          newResults.reduce((a, b) => a + b, 0) / newResults.length;
+            setTimeout(() => {
+                startRound();
+            }, 800);
 
-        setTimeout(() => {
-          setMessage(`Average: ${Math.round(avg)} ms`);
-        }, 1000);
+            return;
+        }
 
+        if (state === "ready") {
+            const time = Date.now() - startTime;
+            const newResults = [...results, time];
+
+            setMessage(`${time} ms`);
+
+            if (newResults.length === 5) {
+                const avg =
+                    newResults.reduce((a, b) => a + b, 0) / newResults.length;
+
+                const bestTime = Math.min(...newResults);
+
+                setAverage(Math.round(avg));
+                setBest(bestTime);
+                setFinished(true);
+
+                setTimeout(async () => {
+                    setMessage(`Average: ${Math.round(avg)} ms`);
+
+                    // tallennus
+                    const user = JSON.parse(localStorage.getItem("user"));
+                    if (user) {
+                        await fetch("http://localhost:3001/scores", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                user_id: user.id,
+                                game_type: "reaction",
+                                score: Math.round(avg),
+                                reaction_time: Math.round(avg),
+                            }),
+                        });
+                    }
+                }, 800);
+
+                setResults([]);
+                setState("idle");
+            } else {
+                setResults(newResults);
+                setState("idle");
+                setTimeout(startRound, 1000);
+            }
+        }
+    };
+
+    const restart = () => {
         setResults([]);
+        setBest(null);
+        setAverage(null);
+        setFinished(false);
+        setMessage("Click Anywhere to Start");
         setState("idle");
-      } else {
-        setResults(newResults);
-        setState("idle");
-        setTimeout(startRound, 1000);
-      }
-    }
-  };
+    };
 
-  return (
-    <div className="rt-page">
-      <h2>⚡ Reaction Test</h2>
-      <p>Click as quickly as you can when the screen turns green</p>
+    return (
+        <div className="rt-page">
+            <h2>⚡ Reaction Test</h2>
+            <p>Click as quickly as you can when the screen turns green</p>
 
-      <div className="rt-stats">
-        <div className="stat">Best Time<br />---</div>
-        <div className="stat">Average<br />---</div>
-        <div className="stat">Attempts<br />{results.length}</div>
-      </div>
+            <div className="rt-stats">
+                <div className="stat">
+                    Best Time<br />{best ?? "---"}
+                </div>
+                <div className="stat">
+                    Average<br />{average ?? "---"}
+                </div>
+            </div>
 
-      <div
-        className={`rt-box ${state}`}
-        onClick={handleClick}
-      >
-        {message}
-      </div>
-    </div>
-  );
+            <div
+                className={`rt-box ${state}`}
+                onClick={handleClick}
+            >
+                {message}
+            </div>
+
+            {finished && (
+                <button onClick={restart} className="play-again-btn">
+                    Play Again
+                </button>
+            )}
+        </div>
+    );
 }
