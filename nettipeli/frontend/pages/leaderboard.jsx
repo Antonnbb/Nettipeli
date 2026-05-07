@@ -1,8 +1,14 @@
+import Navbar from "./navbar";
+
 export default function Leaderboard() {
   return (
-    <div>
-      <h1>Leaderboard</h1>
-      <p>Tulokset tulevat tähän.</p>
-    </div>
+    <>
+      <Navbar />
+
+      <div>
+        <h1>Leaderboard</h1>
+        <p>Tulokset tulevat tähän.</p>
+      </div>
+    </>
   );
 }

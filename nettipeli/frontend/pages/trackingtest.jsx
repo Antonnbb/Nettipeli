@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import axios from 'axios'
+import Navbar from "./navbar";
 
 export default function TrackingTest() {
   const canvasRef = useRef(null);
@@ -90,24 +91,27 @@ export default function TrackingTest() {
       canvas.removeEventListener("mousemove", handleMouseMove);
     };
   }, [isRunning]);
-
   return (
-    <div>
-      <h2>Tracking Test</h2>
+    <>
+      <Navbar />
 
-      <button onClick={startGame} disabled={isRunning}>
-        Start
-      </button>
+      <div>
+        <h2>Tracking Test</h2>
 
-      <p>Aikaa jäljellä: {timeLeft}s</p>
-      <p>Score: {score}</p>
+        <button onClick={startGame} disabled={isRunning}>
+          Start
+        </button>
 
-      <canvas
-        ref={canvasRef}
-        width={600}
-        height={400}
-        style={{ border: "1px solid black" }}
-      />
-    </div>
+        <p>Aikaa jäljellä: {timeLeft}s</p>
+        <p>Score: {score}</p>
+
+        <canvas
+          ref={canvasRef}
+          width={600}
+          height={400}
+          style={{ border: "1px solid black" }}
+        />
+      </div>
+    </>
   );
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./reactiontest.css";
+import Navbar from "./navbar";
 
 export default function ReactionTest() {
     const [state, setState] = useState("idle");
@@ -102,31 +103,35 @@ export default function ReactionTest() {
     };
 
     return (
-        <div className="rt-page">
-            <h2>⚡ Reaction Test</h2>
-            <p>Click as quickly as you can when the screen turns green</p>
+        <>
+            <Navbar />
 
-            <div className="rt-stats">
-                <div className="stat">
-                    Best Time<br />{best ?? "---"}
+            <div className="rt-page">
+                <h2>⚡ Reaction Test</h2>
+                <p>Click as quickly as you can when the screen turns green</p>
+
+                <div className="rt-stats">
+                    <div className="stat">
+                        Best Time<br />{best ?? "---"}
+                    </div>
+                    <div className="stat">
+                        Average<br />{average ?? "---"}
+                    </div>
                 </div>
-                <div className="stat">
-                    Average<br />{average ?? "---"}
+
+                <div
+                    className={`rt-box ${state}`}
+                    onClick={handleClick}
+                >
+                    {message}
                 </div>
-            </div>
 
-            <div
-                className={`rt-box ${state}`}
-                onClick={handleClick}
-            >
-                {message}
+                {finished && (
+                    <button onClick={restart} className="play-again-btn">
+                        Play Again
+                    </button>
+                )}
             </div>
-
-            {finished && (
-                <button onClick={restart} className="play-again-btn">
-                    Play Again
-                </button>
-            )}
-        </div>
+        </>
     );
 }
