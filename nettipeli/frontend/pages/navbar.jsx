@@ -7,7 +7,7 @@ export default function Navbar() {
   const logout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    window.location.href = "/home";
   };
 
   return (
@@ -17,11 +17,19 @@ export default function Navbar() {
       </Link>
 
       <div className="nav-right">
-        <div className="user-box">👤 {user?.username}</div>
+        {!user ? (
+          <Link to="/login">
+            <button className="login-btn">Login / Sign Up</button>
+          </Link>
+        ) : (
+          <>
+           <div className="user-box">👤 {user?.username}</div>
 
-        <button onClick={logout} className="logout-btn">
-          ↪ Logout
-        </button>
+            <button onClick={logout} className="logout-btn">
+              ↪ Logout
+            </button>
+          </>
+        )}
       </div>
     </nav>
   );

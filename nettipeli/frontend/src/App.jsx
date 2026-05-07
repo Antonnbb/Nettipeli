@@ -20,12 +20,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to="/home" />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="/home" element={<Home />} />
         <Route path="/tracking" element={<ProtectedRoute><TrackingTest /></ProtectedRoute>} />
         <Route path="/reaction" element={<ProtectedRoute><ReactionTest /></ProtectedRoute>} />
         <Route path="/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />

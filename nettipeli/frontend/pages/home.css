@@ -1,29 +1,121 @@
 .home {
+  min-height: 100vh;
   text-align: center;
-  padding-top: 50px;
+  padding: 40px 35px;
+  background: linear-gradient(135deg, #eef2ff, #faf5ff);
+}
+
+.home h1 {
+  font-size: 70px;
+  margin: 0;
+  background: linear-gradient(90deg, #4f46e5, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.home h2 {
+  font-size: 28px;
+  color: #374151;
+  font-weight: 400;
+}
+
+.home>p {
+  font-size: 22px;
+  color: #6b7280;
 }
 
 .card-container {
   display: flex;
   justify-content: center;
-  gap: 30px;
-  margin-top: 40px;
+  gap: 35px;
+  margin-top: 80px;
 }
 
 .card {
-  background: #f3f4f6;
-  padding: 30px;
-  border-radius: 20px;
-  width: 250px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  width: 330px;
+  background: white;
+  border-radius: 22px;
+  padding: 45px 35px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.icon {
+  font-size: 55px;
+}
+
+.card h3 {
+  font-size: 32px;
+}
+
+.card p {
+  min-height: 70px;
+  font-size: 18px;
+  color: #374151;
 }
 
 .card button {
-  margin-top: 20px;
-  padding: 10px 20px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 14px;
   border: none;
-  border-radius: 10px;
-  background: #2563eb;
   color: white;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.card.blue button {
+  background: #2563eb;
+}
+
+.card.purple button {
+  background: #a100f2;
+}
+
+.card.pink button {
+  background: #db0061;
+}
+
+.leader {
+  margin-top: 18px;
+  background: white !important;
+}
+
+.blue .leader {
+  color: #2563eb;
+  border: 2px solid #2563eb;
+}
+
+.purple .leader {
+  color: #a100f2;
+  border: 2px solid #a100f2;
+}
+
+.pink .leader {
+  color: #db0061;
+  border: 2px solid #db0061;
+}
+
+.modal-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  font-size: 30px;
+  background: none;
+  border: none;
   cursor: pointer;
 }
