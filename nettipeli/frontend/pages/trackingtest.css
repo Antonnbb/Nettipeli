@@ -1,0 +1,72 @@
+.tracking-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #eef2ff, #fff1f8);
+  text-align: center;
+  padding: 30px;
+}
+
+.back-btn {
+  position: absolute;
+  left: 30px;
+  top: 25px;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.tracking-page h1 {
+  font-size: 48px;
+  background: linear-gradient(90deg, #7c3aed, #ec4899);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.tracking-stats {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin: 45px 0;
+}
+
+.tracking-stats div {
+  background: white;
+  width: 190px;
+  padding: 28px;
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+.tracking-stats span {
+  font-size: 34px;
+  color: #7c3aed;
+}
+
+.game-area {
+  position: relative;
+  width: 900px;
+  height: 420px;
+  margin: auto;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 20px;
+}
+
+.start-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 35px;
+  transform: translateX(-50%);
+  padding: 18px 45px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(90deg, #9333ea, #ec4899);
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}

@@ -1,15 +1,22 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 import Navbar from "./navbar";
+import "./trackingtest.css";
+
+
 
 export default function TrackingTest() {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const ballRef = useRef({ x: 200, y: 200, vx: 4, vy: 3, r: 30 });
+  const navigate = useNavigate();
 
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(10);
   const [isRunning, setIsRunning] = useState(false);
+
+  const accuracy = score > 0 ? Math.round(score) : 0;
 
   const startGame = () => {
     setScore(0);
@@ -91,27 +98,37 @@ export default function TrackingTest() {
       canvas.removeEventListener("mousemove", handleMouseMove);
     };
   }, [isRunning]);
+
+
   return (
-    <>
-      <Navbar />
+    <div className="tracking-page">
+      <button className="back-btn" onClick={() => navigate("/home")}>
+        ← Back to Home
+      </button>
 
-      <div>
-        <h2>Tracking Test</h2>
+      <h1>◎ Tracking Test</h1>
+      <p>Keep your cursor on the moving target for as long as possible</p>
 
-        <button onClick={startGame} disabled={isRunning}>
-          Start
-        </button>
+      <div className="tracking-stats">
+        <div>Time Left<br /><span>{timeLeft}s</span></div>
+        <div>Score<br /><span>{score}</span></div>
+        <div>Accuracy<br /><span>{accuracy}%</span></div>
+        <div>Best Score<br /><span>---</span></div>
+      </div>
 
-        <p>Aikaa jäljellä: {timeLeft}s</p>
-        <p>Score: {score}</p>
+      <div className="game-area">
+        {!isRunning && (
+          <button className="start-btn" onClick={startGame}>
+            Start Test
+          </button>
+        )}
 
         <canvas
           ref={canvasRef}
-          width={600}
-          height={400}
-          style={{ border: "1px solid black" }}
+          width={900}
+          height={420}
         />
       </div>
-    </>
+    </div>
   );
 }
