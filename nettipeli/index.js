@@ -106,38 +106,6 @@ app.post("/register", async (req, res) => {
     res.json(data);
 });
 
-// LOGIN
-app.post("/login", async (req, res) => {
-    const { username, password } = req.body;
-
-    const { data: user, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("username", username)
-        .single();
-
-    if (error || !user) return res.status(401).json({ message: "Väärä käyttäjä" });
-
-    const ok = await bcrypt.compare(password, user.password_hash);
-    if (!ok) return res.status(401).json({ message: "Väärä salasana" });
-
-    const token = jwt.sign(
-        { id: user.id, username: user.username },
-        "SECRET_KEY",
-        { expiresIn: "7d" }
-    );
-
-    res.json({
-        token,
-        user: {
-            id: user.id,
-            username: user.username
-        }
-    });
-});
-
-
-
 const PORT = 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
