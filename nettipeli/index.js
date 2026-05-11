@@ -73,24 +73,26 @@ app.post("/scores", async (req, res) => {
 });
 
 app.get("/scores/:game", async (req, res) => {
-    const { game } = req.params;
+  const { game } = req.params;
 
-    const orderBy = game === "aim" ? "accuracy" : "score";
+  let orderBy = "score";
+  if (game === "aim") orderBy = "accuracy";
+  if (game === "reaction") orderBy = "reaction_time";
 
-    const { data, error } = await supabase
-        .from("scores")
-        .select("*, profiles(username)")
-        .eq("game_type", game)
-        .order(orderBy, { ascending: false })
-        .limit(10);
+  const { data, error } = await supabase
+    .from("scores")
+    .select("*, profiles(username)")
+    .eq("game_type", game)
+    .order(orderBy, { ascending: game === "reaction" }) // 👈 tärkeä
+    .limit(10);
 
-    if (error) return res.status(400).json({ message: error.message });
+  if (error) return res.status(400).json({ message: error.message });
 
-    res.json(data);
+  res.json(data);
 });
 
-const PORT = 3001;
 
+const PORT = 3001;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 })
