@@ -30,9 +30,12 @@ function App() {
         <Route path="/reaction" element={<ProtectedRoute><ReactionTest /></ProtectedRoute>} />
         <Route path="/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
         <Route path="/aim" element={<ProtectedRoute><AimTraining /></ProtectedRoute>} />
+        <Route path="/leaderboard/reaction" element={<Leaderboard game="reaction" />} />
+        <Route path="/leaderboard/tracking" element={<Leaderboard game="tracking" />} />
+        <Route path="/leaderboard/aim" element={<Leaderboard game="aim" />} />
       </Routes>
     </BrowserRouter>
   );
-} 
+}
 
 export default App

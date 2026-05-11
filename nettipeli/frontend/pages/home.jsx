@@ -26,7 +26,7 @@ export default function Home() {
             <h3>Reaction Test</h3>
             <p>Test how fast you can react when the screen changes color</p>
             <button onClick={() => goToGame("/reaction")}>Play Now</button>
-            <button className="leader" onClick={() => navigate("/leaderboard")}>🏆 Leaderboard</button>
+            <button className="leader" onClick={() => navigate("/leaderboard/reaction")}>🏆 Leaderboard</button>
           </div>
 
           <div className="card purple">
@@ -34,15 +34,15 @@ export default function Home() {
             <h3>Tracking Test</h3>
             <p>Keep your cursor on a moving target for as long as possible</p>
             <button onClick={() => goToGame("/tracking")}>Play Now</button>
-            <button className="leader" onClick={() => navigate("/leaderboard")}>🏆 Leaderboard</button>
+            <button className="leader" onClick={() => navigate("/leaderboard/tracking")}>🏆 Leaderboard</button>
           </div>
 
           <div className="card pink">
             <div className="icon">🎪</div>
-            <h3>Aim Training</h3>
+            <h3>Aim Training</h3> 
             <p>Click on targets as accurately as possible within the time limit</p>
             <button onClick={() => goToGame("/aim")}>Play Now</button>
-            <button className="leader" onClick={() => navigate("/leaderboard")}>🏆 Leaderboard</button>
+            <button className="leader" onClick={() => navigate("/leaderboard/aim")}>🏆 Leaderboard</button>
           </div>
         </div>
       </div>
