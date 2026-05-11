@@ -1,26 +1,29 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios'
-import Navbar from "./navbar";
+import axios from "axios";
 import "./trackingtest.css";
-
-
 
 export default function TrackingTest() {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const ballRef = useRef({ x: 200, y: 200, vx: 4, vy: 3, r: 30 });
+
   const navigate = useNavigate();
 
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(10);
   const [isRunning, setIsRunning] = useState(false);
+  const [bestScore, setBestScore] = useState(
+    Number(localStorage.getItem("trackingBest")) || 0
+  );
 
-  const accuracy = score > 0 ? Math.round(score) : 0;
+  const maxScore = 500;
+  const accuracy = Math.min(100, Math.round((score / maxScore) * 100));
 
   const startGame = () => {
     setScore(0);
     setTimeLeft(10);
+    ballRef.current = { x: 200, y: 200, vx: 4, vy: 3, r: 30 };
     setIsRunning(true);
   };
 
@@ -29,9 +32,9 @@ export default function TrackingTest() {
       user_id: "4d938c6a-1150-4afe-953e-2427b12e04a1",
       game_type: "tracking",
       score: score,
-      accuracy: null,
+      accuracy: accuracy,
       reaction_time: null,
-      duration: 10
+      duration: 10,
     });
   };
 
@@ -40,6 +43,12 @@ export default function TrackingTest() {
 
     if (timeLeft <= 0) {
       setIsRunning(false);
+
+      if (score > bestScore) {
+        setBestScore(score);
+        localStorage.setItem("trackingBest", score);
+      }
+
       saveScore();
       return;
     }
@@ -53,6 +62,8 @@ export default function TrackingTest() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
+
     const ctx = canvas.getContext("2d");
 
     const handleMouseMove = (e) => {
@@ -67,6 +78,8 @@ export default function TrackingTest() {
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (!isRunning) return;
 
       const ball = ballRef.current;
       const mouse = mouseRef.current;
@@ -84,7 +97,7 @@ export default function TrackingTest() {
 
       const dist = Math.hypot(mouse.x - ball.x, mouse.y - ball.y);
 
-      if (dist < ball.r && isRunning) {
+      if (dist < ball.r) {
         setScore((prev) => prev + 1);
       }
 
@@ -99,7 +112,6 @@ export default function TrackingTest() {
     };
   }, [isRunning]);
 
-
   return (
     <div className="tracking-page">
       <button className="back-btn" onClick={() => navigate("/home")}>
@@ -113,21 +125,29 @@ export default function TrackingTest() {
         <div>Time Left<br /><span>{timeLeft}s</span></div>
         <div>Score<br /><span>{score}</span></div>
         <div>Accuracy<br /><span>{accuracy}%</span></div>
-        <div>Best Score<br /><span>---</span></div>
+        <div>Best Score<br /><span>{bestScore || "---"}</span></div>
       </div>
 
       <div className="game-area">
-        {!isRunning && (
+        {!isRunning && timeLeft === 10 && (
           <button className="start-btn" onClick={startGame}>
             Start Test
           </button>
         )}
 
-        <canvas
-          ref={canvasRef}
-          width={900}
-          height={420}
-        />
+        {!isRunning && timeLeft === 0 && (
+          <div className="result-box">
+            <div className="trophy">🏆</div>
+            <h2>Final Score: {score}</h2>
+            <p>Accuracy: {accuracy}%</p>
+
+            <button className="start-btn" onClick={startGame}>
+              Play Again
+            </button>
+          </div>
+        )}
+
+        <canvas ref={canvasRef} width={900} height={420} />
       </div>
     </div>
   );
