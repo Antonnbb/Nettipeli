@@ -7,6 +7,7 @@ export default function TrackingTest() {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const ballRef = useRef({ x: 200, y: 200, vx: 4, vy: 3, r: 30 });
+  const scoreRef = useRef(0);
 
   const navigate = useNavigate();
 
@@ -20,22 +21,27 @@ export default function TrackingTest() {
   const maxScore = 500;
   const accuracy = Math.min(100, Math.round((score / maxScore) * 100));
 
+  const saveScore = async (finalScore, finalAccuracy) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) return;
+
+    await axios.post("http://localhost:3001/scores", {
+      user_id: user.id,
+      game_type: "tracking",
+      score: finalScore,
+      accuracy: finalAccuracy,
+      reaction_time: null,
+      duration: 10,
+    });
+  };
+
   const startGame = () => {
+    scoreRef.current = 0;
     setScore(0);
     setTimeLeft(10);
     ballRef.current = { x: 200, y: 200, vx: 4, vy: 3, r: 30 };
     setIsRunning(true);
-  };
-
-  const saveScore = async () => {
-    await axios.post("http://localhost:3001/scores", {
-      user_id: "4d938c6a-1150-4afe-953e-2427b12e04a1",
-      game_type: "tracking",
-      score: score,
-      accuracy: accuracy,
-      reaction_time: null,
-      duration: 10,
-    });
   };
 
   useEffect(() => {
@@ -44,12 +50,18 @@ export default function TrackingTest() {
     if (timeLeft <= 0) {
       setIsRunning(false);
 
-      if (score > bestScore) {
-        setBestScore(score);
-        localStorage.setItem("trackingBest", score);
+      const finalScore = scoreRef.current;
+      const finalAccuracy = Math.min(
+        100,
+        Math.round((finalScore / maxScore) * 100)
+      );
+
+      if (finalScore > bestScore) {
+        setBestScore(finalScore);
+        localStorage.setItem("trackingBest", finalScore);
       }
 
-      saveScore();
+      saveScore(finalScore, finalAccuracy);
       return;
     }
 
@@ -98,7 +110,8 @@ export default function TrackingTest() {
       const dist = Math.hypot(mouse.x - ball.x, mouse.y - ball.y);
 
       if (dist < ball.r) {
-        setScore((prev) => prev + 1);
+        scoreRef.current += 1;
+        setScore(scoreRef.current);
       }
 
       animation = requestAnimationFrame(draw);

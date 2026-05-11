@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./aimtraining.css";
 
 export default function AimTraining() {
@@ -25,6 +26,21 @@ export default function AimTraining() {
     setTarget({
       x: Math.random() * 830,
       y: Math.random() * 350,
+    });
+  };
+
+  const saveScore = async (finalAccuracy) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) return;
+
+    await axios.post("http://localhost:3001/scores", {
+      user_id: user.id,
+      game_type: "aim",
+      score: scoreRef.current,
+      accuracy: finalAccuracy,
+      reaction_time: null,
+      duration: 30,
     });
   };
 
@@ -79,6 +95,8 @@ export default function AimTraining() {
             setBest(finalAccuracy);
             localStorage.setItem("aimBestAcc", finalAccuracy);
           }
+
+          saveScore(finalAccuracy);
 
           return 0;
         }
