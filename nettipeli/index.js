@@ -59,6 +59,21 @@ app.post("/scores", async (req, res) => {
     res.json(data);
 });
 
+app.get("/scores/:game", async (req, res) => {
+  const { game } = req.params;
+
+  const { data, error } = await supabase
+    .from("scores")
+    .select("*, profiles(username)")
+    .eq("game_type", game)
+    .order("score", { ascending: false })
+    .limit(10);
+
+  if (error) return res.status(400).json({ message: error.message });
+
+  res.json(data);
+});
+
 app.get("/leaderboard/:game", async (req, res) => {
     const { game } = req.params;
 
