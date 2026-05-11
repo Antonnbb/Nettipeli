@@ -1,0 +1,108 @@
+.aim-page {
+    min-height: 100vh;
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(135deg, #eef2ff, #fff1f8);
+}
+
+.aim-page h1 {
+    font-size: 52px;
+    color: #ec005f;
+}
+
+.aim-page p {
+    font-size: 24px;
+    color: #4b5563;
+}
+
+.aim-stats {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 45px 0;
+}
+
+.aim-stats div {
+    background: white;
+    width: 190px;
+    padding: 28px;
+    border-radius: 18px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.aim-stats span {
+    font-size: 36px;
+    color: #ec005f;
+}
+
+.aim-area {
+    position: relative;
+    width: 900px;
+    height: 420px;
+    margin: auto;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.aim-start-btn {
+    position: absolute;
+    left: 50%;
+    bottom: 60px;
+    transform: translateX(-50%);
+    padding: 20px 55px;
+    border: none;
+    border-radius: 16px;
+    background: #ec005f;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.target {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #ec005f;
+    border: none;
+    cursor: pointer;
+}
+
+.aim-result-box {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.96);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    text-align: center;
+    padding: 20px;
+}
+
+.aim-result-icon {
+  font-size: 80px;
+  margin-bottom: 15px;
+}
+
+.aim-result-box h2 {
+  font-size: 34px;
+  font-weight: 400;
+  margin: 10px 0;
+}
+
+.aim-result-box p {
+    font-size: 26px;
+    color: #4b5563;
+    margin-bottom: 35px;
+}
+
+.aim-result-box .aim-start-btn {
+  position: static;
+  transform: none;
+  margin-top: 10px;
+}
