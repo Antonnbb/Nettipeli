@@ -14,13 +14,13 @@ export default function AimTraining() {
   );
   const [target, setTarget] = useState({ x: 300, y: 180 });
   const [clicks, setClicks] = useState(0);
-  const [misses, setMisses] = useState(0);
 
   const scoreRef = useRef(0);
   const clicksRef = useRef(0);
+  const savedRef = useRef(false);
 
   const accuracy =
-    clicks > 0 ? Math.max(0, Math.round((score / clicks) * 100)) : 0;
+    clicks > 0 ? Math.round((score / clicks) * 100) : 0;
 
   const randomTarget = () => {
     setTarget({
@@ -31,7 +31,6 @@ export default function AimTraining() {
 
   const saveScore = async (finalAccuracy) => {
     const user = JSON.parse(localStorage.getItem("user"));
-
     if (!user) return;
 
     await axios.post("http://localhost:3001/scores", {
@@ -61,9 +60,7 @@ export default function AimTraining() {
     if (!isRunning) return;
 
     clicksRef.current += 1;
-
     setClicks(clicksRef.current);
-    setMisses((prev) => prev + 1);
 
     randomTarget();
   };
@@ -71,10 +68,10 @@ export default function AimTraining() {
   const startGame = () => {
     scoreRef.current = 0;
     clicksRef.current = 0;
+    savedRef.current = false;
 
     setScore(0);
     setClicks(0);
-    setMisses(0);
     setTimeLeft(30);
     setIsRunning(true);
 
@@ -96,7 +93,10 @@ export default function AimTraining() {
             localStorage.setItem("aimBestAcc", finalAccuracy);
           }
 
-          saveScore(finalAccuracy);
+          if (!savedRef.current) {
+            savedRef.current = true;
+            saveScore(finalAccuracy);
+          }
 
           return 0;
         }
@@ -132,11 +132,7 @@ export default function AimTraining() {
         {!isRunning && timeLeft === 0 && (
           <div className="aim-result-box">
             <div className="aim-result-icon">🎯</div>
-
-            <h2>
-              Final Accuracy: <span>{accuracy}%</span>
-            </h2>
-
+            <h2>Final Accuracy: <span>{accuracy}%</span></h2>
             <p>{score} hits out of {clicks} clicks</p>
 
             <button className="aim-start-btn" onClick={startGame}>
