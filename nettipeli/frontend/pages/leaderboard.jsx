@@ -27,7 +27,7 @@ export default function Leaderboard({ game }) {
               <tr>
                 <th>#</th>
                 <th>Käyttäjä</th>
-                <th>Accuracy</th>
+                <th>{game === "reaction" ? "Time" : "Accuracy"}</th>
               </tr>
             </thead>
 
@@ -35,8 +35,12 @@ export default function Leaderboard({ game }) {
               {scores.map((s, i) => (
                 <tr key={i}>
                   <td>{i + 1}</td>
-                  <td>{s.profiles?.username}</td>
-                  <td>{s.accuracy}%</td>
+                  <td>{s.profiles?.username || "Unknown"}</td>
+                  <td>
+                    {game === "reaction"
+                      ? `${s.reaction_time} ms`
+                      : `${s.accuracy}%`}
+                  </td>
                 </tr>
               ))}
             </tbody>
