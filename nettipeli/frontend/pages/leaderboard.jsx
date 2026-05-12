@@ -30,7 +30,7 @@ export default function Leaderboard({ game }) {
                   <th>#</th>
                   <th>Käyttäjä</th>
                   <th>
-                    {game === "reaction" ? "Time (ms)" : "Accuracy"}
+                    {game === "reaction" ? "Average (ms)" : "Accuracy"}
                   </th>
                 </tr>
               </thead>
