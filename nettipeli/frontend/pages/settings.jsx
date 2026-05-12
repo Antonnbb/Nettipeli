@@ -1,37 +1,39 @@
 import { useState, useEffect } from "react";
 import Navbar from "./navbar";
+import "./settings.css";
 
 export default function Settings() {
-  const [sensitivity, setSensitivity] = useState(5);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true"
+  );
 
   useEffect(() => {
-    const saved = localStorage.getItem("sensitivity");
-    if (saved) setSensitivity(Number(saved));
-  }, []);
+    document.body.classList.toggle("dark", darkMode);
+  }, [darkMode]);
 
-  const handleChange = (e) => {
-    const value = Number(e.target.value);
-    setSensitivity(value);
-    localStorage.setItem("sensitivity", value);
+  const toggleDarkMode = () => {
+    const value = !darkMode;
+    setDarkMode(value);
+    localStorage.setItem("darkMode", value);
+    document.body.classList.toggle("dark", value);
   };
-  
+
   return (
     <>
       <Navbar />
 
-      <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <h1>⚙️ Settings</h1>
+      <div className="settings-page">
+        <div className="settings-card">
+          <h1>⚙️ Settings</h1>
 
-        <p>Sensitivity: {sensitivity}</p>
+          <div className="setting-box">
+            <h2>🌙 Dark Mode</h2>
 
-        <input
-          type="range"
-          min="1"
-          max="10"
-          value={sensitivity}
-          onChange={handleChange}
-          style={{ width: "300px" }}
-        />
+            <button onClick={toggleDarkMode}>
+              {darkMode ? "Disable" : "Enable"}
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );

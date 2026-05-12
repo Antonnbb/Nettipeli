@@ -1,0 +1,94 @@
+body.dark {
+  background: #0f172a !important;
+  color: white !important;
+}
+
+body.dark .home-page,
+body.dark .settings-page,
+body.dark .profile-page,
+body.dark .leaderboard-page {
+  background: #0f172a !important;
+  color: white !important;
+}
+
+body.dark .navbar {
+  background: #111827 !important;
+}
+
+body.dark .game-card,
+body.dark .settings-card,
+body.dark .profile-card,
+body.dark .leaderboard-card {
+  background: #1e293b !important;
+  color: white !important;
+}
+
+body.dark .game-card h2,
+body.dark .game-card p,
+body.dark .settings-card h1,
+body.dark .settings-card h2,
+body.dark .settings-card p {
+  color: white !important;
+}
+
+body.dark .game-card button {
+  color: white !important;
+}
+
+body.dark .home-title,
+body.dark .home-subtitle,
+body.dark .home-description {
+  color: white !important;
+}
+
+/* SETTINGS DARK FIX */
+body.dark .setting-box {
+  background: #334155 !important;
+  color: white !important;
+}
+
+body.dark .setting-box h2,
+body.dark .setting-box p {
+  color: white !important;
+}
+
+body.dark .setting-box button {
+  background: #7c3aed;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+/* GAME PAGES DARK MODE */
+body.dark .rt-page,
+body.dark .tracking-page,
+body.dark .aim-page {
+  background: #0f172a !important;
+  color: white !important;
+}
+
+body.dark .rt-page h1,
+body.dark .rt-page p,
+body.dark .tracking-page h1,
+body.dark .tracking-page p,
+body.dark .aim-page h1,
+body.dark .aim-page p {
+  color: white !important;
+}
+
+body.dark .rt-stats .stat,
+body.dark .tracking-stats div,
+body.dark .aim-stats div,
+body.dark .game-area,
+body.dark .aim-area {
+  background: #1e293b !important;
+  color: white !important;
+}
+
+body.dark .result-box,
+body.dark .aim-result-box {
+  background: #1e293b !important;
+  color: white !important;
+}
