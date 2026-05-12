@@ -119,3 +119,29 @@
   border: none;
   cursor: pointer;
 }
+
+body.dark .home {
+  background: #0f172a !important;
+}
+
+body.dark .home h2,
+body.dark .home > p {
+  color: #cbd5e1 !important;
+}
+
+body.dark .card {
+  background: #1e293b !important;
+  color: white !important;
+}
+
+body.dark .card h3 {
+  color: white !important;
+}
+
+body.dark .card p {
+  color: #cbd5e1 !important;
+}
+
+body.dark .leader {
+  background: transparent !important;
+}
