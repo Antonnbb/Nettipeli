@@ -91,6 +91,31 @@ app.get("/scores/:game", async (req, res) => {
   res.json(data);
 });
 
+app.get("/profile-stats/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  const { data, error } = await supabase
+    .from("scores")
+    .select("*")
+    .eq("user_id", userId);
+
+  if (error) return res.status(400).json({ message: error.message });
+
+  const reaction = data
+    .filter((s) => s.game_type === "reaction")
+    .sort((a, b) => a.reaction_time - b.reaction_time)[0];
+
+  const aim = data
+    .filter((s) => s.game_type === "aim")
+    .sort((a, b) => b.accuracy - a.accuracy)[0];
+
+  const tracking = data
+    .filter((s) => s.game_type === "tracking")
+    .sort((a, b) => b.score - a.score)[0];
+
+  res.json({ reaction, aim, tracking });
+});
+
 
 const PORT = 3001;
 app.listen(PORT, () => {
