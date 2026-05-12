@@ -15,9 +15,7 @@ export default function Navbar() {
       <Link to="/home" className="logo">
         <span>ReactionLab</span>
       </Link>
-      <Link to="/settings">Settings</Link>
-
-
+      
 
       <div className="nav-right">
         {!user ? (
@@ -35,6 +33,10 @@ export default function Navbar() {
             </button>
           </>
         )}
+
+        <Link to="/settings" className="settings-link">
+        ⚙️ Settings
+      </Link>
       </div>
     </nav>
   );

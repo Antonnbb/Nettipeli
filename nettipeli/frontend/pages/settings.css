@@ -58,3 +58,63 @@
   background: #6d28d9;
   transform: translateY(-2px);
 }
+
+.settings-sub {
+  color: #9ca3af;
+  margin-bottom: 30px;
+}
+
+.settings-grid {
+  display: flex;
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.setting-box {
+  flex: 1;
+  background: #f3f4f6;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: left;
+  transition: 0.2s;
+}
+
+.setting-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.setting-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.setting-header span {
+  font-size: 28px;
+}
+
+.setting-header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.setting-box p {
+  margin: 10px 0 20px;
+  color: #6b7280;
+}
+
+.setting-box button {
+  background: #7c3aed;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.setting-box button:hover {
+  background: #6d28d9;
+}
