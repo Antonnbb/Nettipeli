@@ -25,13 +25,34 @@ export default function Settings() {
       <div className="settings-page">
         <div className="settings-card">
           <h1>⚙️ Settings</h1>
+          <p className="settings-sub">Customize your experience</p>
 
-          <div className="setting-box">
-            <h2>🌙 Dark Mode</h2>
+          <div className="settings-grid">
+            
+            {/* DARK MODE */}
+            <div className="setting-box">
+              <div className="setting-header">
+                <span>🌙</span>
+                <h2>Dark Mode</h2>
+              </div>
 
-            <button onClick={toggleDarkMode}>
-              {darkMode ? "Disable" : "Enable"}
-            </button>
+              <p>Switch between light and dark theme</p>
+
+              <button onClick={toggleDarkMode}>
+                {darkMode ? "Disable" : "Enable"}
+              </button>
+            </div>
+
+            {/* EXTRA (valmis lisäykseen myöhemmin) */}
+            <div className="setting-box">
+              <div className="setting-header">
+                <span>🎨</span>
+                <h2>Theme</h2>
+              </div>
+
+              <p>More customization options coming soon...</p>
+            </div>
+
           </div>
         </div>
       </div>
