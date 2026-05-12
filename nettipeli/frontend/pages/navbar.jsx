@@ -15,6 +15,9 @@ export default function Navbar() {
       <Link to="/home" className="logo">
         <span>ReactionLab</span>
       </Link>
+      <Link to="/settings">Settings</Link>
+
+
 
       <div className="nav-right">
         {!user ? (
@@ -23,7 +26,9 @@ export default function Navbar() {
           </Link>
         ) : (
           <>
-           <div className="user-box">👤 {user?.username}</div>
+            <div className="user-box">
+              <Link to="/profile">👤 {user?.username}</Link>
+            </div>
 
             <button onClick={logout} className="logout-btn">
               ↪ Logout
