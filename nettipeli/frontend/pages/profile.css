@@ -88,3 +88,48 @@ body.dark .profile-stats h3 {
 body.dark .profile-stats p {
   color: #e5e7eb !important;
 }
+
+.username-change {
+  margin: 25px auto 10px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.username-change input {
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 2px solid #e5e7eb;
+  font-size: 16px;
+  outline: none;
+}
+
+.username-change input:focus {
+  border-color: #7c3aed;
+}
+
+.username-change button {
+  padding: 14px 22px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #7c3aed, #ec4899);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.username-change button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
+}
+
+body.dark .username-change input {
+  background: #334155;
+  color: white;
+  border-color: #475569;
+}
+
+body.dark .username-change input::placeholder {
+  color: #cbd5e1;
+}

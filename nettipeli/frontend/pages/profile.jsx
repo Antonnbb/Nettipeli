@@ -6,6 +6,7 @@ import "./profile.css";
 export default function Profile() {
   const user = JSON.parse(localStorage.getItem("user"));
   const [stats, setStats] = useState(null);
+  const [newUsername, setNewUsername] = useState("");
 
   useEffect(() => {
     if (!user) return;
@@ -14,6 +15,23 @@ export default function Profile() {
       .get(`http://localhost:3001/profile-stats/${user.id}`)
       .then((res) => setStats(res.data));
   }, []);
+
+  const changeUsername = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!newUsername) return;
+
+    const res = await axios.put("http://localhost:3001/profile/username", {
+      user_id: user.id,
+      username: newUsername,
+    });
+
+    const updatedUser = res.data;
+
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+
+    window.location.reload();
+  };
 
   return (
     <>
@@ -24,6 +42,19 @@ export default function Profile() {
           <div className="profile-avatar">👤</div>
           <h1>{user?.username}</h1>
           <p className="profile-subtitle">ReactionLab Player</p>
+
+          <div className="username-change">
+            <input
+              type="text"
+              placeholder="New username"
+              value={newUsername}
+              onChange={(e) => setNewUsername(e.target.value)}
+            />
+
+            <button onClick={changeUsername}>
+              Change Username
+            </button>
+          </div>
 
           <div className="profile-stats">
             <div>
@@ -46,6 +77,9 @@ export default function Profile() {
           </div>
         </div>
       </div>
+
+
+
     </>
   );
 }
