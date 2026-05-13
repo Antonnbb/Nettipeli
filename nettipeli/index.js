@@ -73,47 +73,62 @@ app.post("/scores", async (req, res) => {
 });
 
 app.get("/scores/:game", async (req, res) => {
-  const { game } = req.params;
+    const { game } = req.params;
 
-  let orderBy = "score";
-  if (game === "aim") orderBy = "accuracy";
-  if (game === "reaction") orderBy = "reaction_time";
+    let orderBy = "score";
+    if (game === "aim") orderBy = "accuracy";
+    if (game === "reaction") orderBy = "reaction_time";
 
-  const { data, error } = await supabase
-    .from("scores")
-    .select("*, profiles(username)")
-    .eq("game_type", game)
-    .order(orderBy, { ascending: game === "reaction" }) // 👈 tärkeä
-    .limit(10);
+    const { data, error } = await supabase
+        .from("scores")
+        .select("*, profiles(username)")
+        .eq("game_type", game)
+        .order(orderBy, { ascending: game === "reaction" }) // 👈 tärkeä
+        .limit(10);
 
-  if (error) return res.status(400).json({ message: error.message });
+    if (error) return res.status(400).json({ message: error.message });
 
-  res.json(data);
+    res.json(data);
 });
 
 app.get("/profile-stats/:userId", async (req, res) => {
-  const { userId } = req.params;
+    const { userId } = req.params;
 
-  const { data, error } = await supabase
-    .from("scores")
-    .select("*")
-    .eq("user_id", userId);
+    const { data, error } = await supabase
+        .from("scores")
+        .select("*")
+        .eq("user_id", userId);
 
-  if (error) return res.status(400).json({ message: error.message });
+    if (error) return res.status(400).json({ message: error.message });
 
-  const reaction = data
-    .filter((s) => s.game_type === "reaction")
-    .sort((a, b) => a.reaction_time - b.reaction_time)[0];
+    const reaction = data
+        .filter((s) => s.game_type === "reaction")
+        .sort((a, b) => a.reaction_time - b.reaction_time)[0];
 
-  const aim = data
-    .filter((s) => s.game_type === "aim")
-    .sort((a, b) => b.accuracy - a.accuracy)[0];
+    const aim = data
+        .filter((s) => s.game_type === "aim")
+        .sort((a, b) => b.accuracy - a.accuracy)[0];
 
-  const tracking = data
-    .filter((s) => s.game_type === "tracking")
-    .sort((a, b) => b.score - a.score)[0];
+    const tracking = data
+        .filter((s) => s.game_type === "tracking")
+        .sort((a, b) => b.score - a.score)[0];
 
-  res.json({ reaction, aim, tracking });
+    res.json({ reaction, aim, tracking });
+});
+
+app.put("/profile/username", async (req, res) => {
+    const { user_id, username } = req.body;
+
+    const { data, error } = await supabase
+        .from("profiles")
+        .update({ username })
+        .eq("id", user_id)
+        .select("id, username")
+        .single();
+
+    if (error) return res.status(400).json({ message: error.message });
+
+    res.json(data);
 });
 
 
