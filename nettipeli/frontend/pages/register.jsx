@@ -23,7 +23,7 @@ export default function Register() {
       <div className="auth-card">
         <Link to="/home" className="auth-close">×</Link>
 
-        <div className="auth-icon">⚡</div>
+        <div className="auth-icon"></div>
         <h1>Join ReactionLab</h1>
         <p className="auth-subtitle">Create an account to get started</p>
 

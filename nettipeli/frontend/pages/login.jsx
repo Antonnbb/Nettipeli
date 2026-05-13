@@ -31,7 +31,7 @@ export default function Login() {
       <div className="auth-card">
         <Link to="/home" className="auth-close">×</Link>
 
-        <div className="auth-icon">⚡</div>
+        <div className="auth-icon"></div>
         <h1>Welcome Back!</h1>
         <p className="auth-subtitle">Login to continue your journey</p>
 
