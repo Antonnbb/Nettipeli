@@ -13,7 +13,7 @@
   border-radius: 28px;
   padding: 50px;
   text-align: center;
-  box-shadow: 0 18px 45px rgba(0,0,0,0.12);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
 }
 
 .profile-avatar {
@@ -64,4 +64,27 @@
 
 .profile-stats p {
   color: #6b7280;
+}
+
+body.dark .profile-card h1,
+body.dark .profile-card h2,
+body.dark .profile-card h3 {
+  color: white !important;
+}
+
+body.dark .profile-subtitle {
+  color: #cbd5e1 !important;
+}
+
+body.dark .profile-stats div {
+  background: #334155 !important;
+  color: white !important;
+}
+
+body.dark .profile-stats h3 {
+  color: white !important;
+}
+
+body.dark .profile-stats p {
+  color: #e5e7eb !important;
 }
