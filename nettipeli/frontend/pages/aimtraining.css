@@ -85,14 +85,14 @@
 }
 
 .aim-result-icon {
-  font-size: 80px;
-  margin-bottom: 15px;
+    font-size: 80px;
+    margin-bottom: 15px;
 }
 
 .aim-result-box h2 {
-  font-size: 34px;
-  font-weight: 400;
-  margin: 10px 0;
+    font-size: 34px;
+    font-weight: 400;
+    margin: 10px 0;
 }
 
 .aim-result-box p {
@@ -102,7 +102,62 @@
 }
 
 .aim-result-box .aim-start-btn {
-  position: static;
-  transform: none;
-  margin-top: 10px;
+    position: static;
+    transform: none;
+    margin-top: 10px;
+}
+
+.aim-area.custom-cursor {
+    cursor: none;
+}
+
+.custom-aim-cursor {
+    position: absolute;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 50;
+}
+
+.custom-aim-cursor.dot {
+    width: 10px;
+    height: 10px;
+    background: #ef4444;
+    border-radius: 50%;
+}
+
+.custom-aim-cursor.circle {
+    width: 34px;
+    height: 34px;
+    border: 3px solid #ef4444;
+    border-radius: 50%;
+}
+
+.custom-aim-cursor.crosshair {
+    width: 34px;
+    height: 34px;
+}
+
+.custom-aim-cursor.crosshair::before,
+.custom-aim-cursor.crosshair::after {
+    content: "";
+    position: absolute;
+    background: #ef4444;
+}
+
+.custom-aim-cursor.crosshair::before {
+    width: 34px;
+    height: 3px;
+    top: 15px;
+    left: 0;
+}
+
+.custom-aim-cursor.crosshair::after {
+    width: 3px;
+    height: 34px;
+    left: 15px;
+    top: 0;
+}
+
+.hide-cursor {
+    cursor: none;
 }

@@ -18,12 +18,13 @@ export default function TrackingTest() {
     Number(localStorage.getItem("trackingBest")) || 0
   );
 
+  const cursorStyle = localStorage.getItem("cursorStyle") || "default";
+
   const maxScore = 500;
   const accuracy = Math.min(100, Math.round((score / maxScore) * 100));
 
   const saveScore = async (finalScore, finalAccuracy) => {
     const user = JSON.parse(localStorage.getItem("user"));
-
     if (!user) return;
 
     await axios.post("http://localhost:3001/scores", {
@@ -88,10 +89,47 @@ export default function TrackingTest() {
 
     let animation;
 
+    const drawCursor = () => {
+      const mouse = mouseRef.current;
+
+      if (cursorStyle === "dot") {
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = "#ef4444";
+        ctx.fill();
+      }
+
+      if (cursorStyle === "circle") {
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, 17, 0, Math.PI * 2);
+        ctx.strokeStyle = "#ef4444";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
+
+      if (cursorStyle === "crosshair") {
+        ctx.strokeStyle = "#ef4444";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(mouse.x - 18, mouse.y);
+        ctx.lineTo(mouse.x + 18, mouse.y);
+        ctx.moveTo(mouse.x, mouse.y - 18);
+        ctx.lineTo(mouse.x, mouse.y + 18);
+        ctx.stroke();
+      }
+    };
+
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      if (!isRunning) return;
+      if (!isRunning) {
+        if (cursorStyle !== "default") {
+          drawCursor();
+        }
+
+        animation = requestAnimationFrame(draw);
+        return;
+      }
 
       const ball = ballRef.current;
       const mouse = mouseRef.current;
@@ -114,6 +152,10 @@ export default function TrackingTest() {
         setScore(scoreRef.current);
       }
 
+      if (cursorStyle !== "default") {
+        drawCursor();
+      }
+
       animation = requestAnimationFrame(draw);
     };
 
@@ -123,7 +165,7 @@ export default function TrackingTest() {
       cancelAnimationFrame(animation);
       canvas.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [isRunning]);
+  }, [isRunning, cursorStyle]);
 
   return (
     <div className="tracking-page">
@@ -160,7 +202,12 @@ export default function TrackingTest() {
           </div>
         )}
 
-        <canvas ref={canvasRef} width={900} height={420} />
+        <canvas
+          ref={canvasRef}
+          width={900}
+          height={420}
+          className={cursorStyle !== "default" ? "hide-cursor" : ""}
+        />
       </div>
     </div>
   );

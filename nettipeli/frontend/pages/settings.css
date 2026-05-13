@@ -118,3 +118,24 @@
 .setting-box button:hover {
   background: #6d28d9;
 }
+
+.settings-select {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 2px solid #e5e7eb;
+  font-size: 16px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+}
+
+.settings-select:focus {
+  border-color: #7c3aed;
+}
+
+body.dark .settings-select {
+  background: #1e293b;
+  color: white;
+  border-color: #475569;
+}

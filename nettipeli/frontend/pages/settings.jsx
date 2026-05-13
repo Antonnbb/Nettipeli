@@ -18,44 +18,61 @@ export default function Settings() {
     document.body.classList.toggle("dark", value);
   };
 
+  const [cursorStyle, setCursorStyle] = useState(
+    localStorage.getItem("cursorStyle") || "default"
+  );
+
+  const changeCursorStyle = (style) => {
+    setCursorStyle(style);
+    localStorage.setItem("cursorStyle", style);
+  };
+
+
   return (
-    <>
-      <Navbar />
+  <>
+    <Navbar />
 
-      <div className="settings-page">
-        <div className="settings-card">
-          <h1>⚙️ Settings</h1>
-          <p className="settings-sub">Customize your experience</p>
+    <div className="settings-page">
+      <div className="settings-card">
+        <h1>⚙️ Settings</h1>
+        <p className="settings-sub">Customize your experience</p>
 
-          <div className="settings-grid">
-            
-            {/* DARK MODE */}
-            <div className="setting-box">
-              <div className="setting-header">
-                <span>🌙</span>
-                <h2>Dark Mode</h2>
-              </div>
-
-              <p>Switch between light and dark theme</p>
-
-              <button onClick={toggleDarkMode}>
-                {darkMode ? "Disable" : "Enable"}
-              </button>
+        <div className="settings-grid">
+          <div className="setting-box">
+            <div className="setting-header">
+              <span>🌙</span>
+              <h2>Dark Mode</h2>
             </div>
 
-            {/* EXTRA (valmis lisäykseen myöhemmin) */}
-            <div className="setting-box">
-              <div className="setting-header">
-                <span>🎨</span>
-                <h2>Theme</h2>
-              </div>
+            <p>Switch between light and dark theme</p>
 
-              <p>More customization options coming soon...</p>
+            <button onClick={toggleDarkMode}>
+              {darkMode ? "Disable" : "Enable"}
+            </button>
+          </div>
+
+          <div className="setting-box">
+            <div className="setting-header">
+              <span>🎯</span>
+              <h2>Cursor Style</h2>
             </div>
 
+            <p>Choose your aim cursor style</p>
+
+            <select
+              value={cursorStyle}
+              onChange={(e) => changeCursorStyle(e.target.value)}
+              className="settings-select"
+            >
+              <option value="default">Default</option>
+              <option value="dot">Dot</option>
+              <option value="crosshair">Crosshair</option>
+              <option value="circle">Circle</option>
+            </select>
           </div>
         </div>
       </div>
-    </>
-  );
+    </div>
+  </>
+);
 }

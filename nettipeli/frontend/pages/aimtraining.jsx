@@ -9,18 +9,27 @@ export default function AimTraining() {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
   const [isRunning, setIsRunning] = useState(false);
-  const [best, setBest] = useState(
-    Number(localStorage.getItem("aimBestAcc")) || 0
-  );
+  const [best, setBest] = useState(Number(localStorage.getItem("aimBestAcc")) || 0);
   const [target, setTarget] = useState({ x: 300, y: 180 });
   const [clicks, setClicks] = useState(0);
+
+  const [cursorStyle] = useState(localStorage.getItem("cursorStyle") || "default");
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
 
   const scoreRef = useRef(0);
   const clicksRef = useRef(0);
   const savedRef = useRef(false);
 
-  const accuracy =
-    clicks > 0 ? Math.round((score / clicks) * 100) : 0;
+  const accuracy = clicks > 0 ? Math.round((score / clicks) * 100) : 0;
+
+  const moveCursor = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+
+    setMouse({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
 
   const randomTarget = () => {
     setTarget({
@@ -65,7 +74,9 @@ export default function AimTraining() {
     randomTarget();
   };
 
-  const startGame = () => {
+  const startGame = (e) => {
+    e.stopPropagation();
+
     scoreRef.current = 0;
     clicksRef.current = 0;
     savedRef.current = false;
@@ -122,7 +133,11 @@ export default function AimTraining() {
         <div>Best<br /><span>{best ? best + "%" : "---"}</span></div>
       </div>
 
-      <div className="aim-area" onClick={missTarget}>
+      <div
+        className={`aim-area ${cursorStyle !== "default" ? "custom-cursor" : ""}`}
+        onClick={missTarget}
+        onMouseMove={moveCursor}
+      >
         {!isRunning && timeLeft === 30 && (
           <button className="aim-start-btn" onClick={startGame}>
             Start Test
@@ -146,6 +161,13 @@ export default function AimTraining() {
             className="target"
             onClick={hitTarget}
             style={{ left: target.x, top: target.y }}
+          />
+        )}
+
+        {cursorStyle !== "default" && (
+          <div
+            className={`custom-aim-cursor ${cursorStyle}`}
+            style={{ left: mouse.x, top: mouse.y }}
           />
         )}
       </div>
