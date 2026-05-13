@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import axios from 'axios'
-import { Link } from 'react-router-dom'
-import './authentication.css'
+import { useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import "./authentication.css";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -13,31 +13,39 @@ export default function Register() {
       password,
     });
 
-    alert("Käyttäjä luotu! Voit nyt kirjautua.");
     window.location.href = "/login";
   };
 
-
   return (
     <div className="auth-page">
-      <div className="auth-card">
-        <h1>Register</h1>
+      <div className="auth-overlay"></div>
 
+      <div className="auth-card">
+        <Link to="/home" className="auth-close">×</Link>
+
+        <div className="auth-icon">⚡</div>
+        <h1>Join ReactionLab</h1>
+        <p className="auth-subtitle">Create an account to get started</p>
+
+        <label>Username</label>
         <input
-          placeholder="Username"
+          placeholder="Enter your username"
+          value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
 
+        <label>Password</label>
         <input
-          placeholder="Password"
+          placeholder="Enter your password"
           type="password"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button onClick={register}>Register</button>
+        <button onClick={register}>Sign Up</button>
 
-        <p>
-          On jo tili? <Link to="/login">Kirjaudu</Link>
+        <p className="auth-link-text">
+          Already have an account? <Link to="/login">Login</Link>
         </p>
       </div>
     </div>
