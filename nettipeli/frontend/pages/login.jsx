@@ -2,62 +2,78 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./authentication.css";
+import Toast from "./toast.jsx";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [toast, setToast] = useState(null);
 
-  const login = async () => {
-    try {
-      const res = await axios.post("http://localhost:3001/login", {
-        username,
-        password,
-      });
+    const login = async () => {
+        if (!username || !password) {
+            setToast({ message: "Please fill all fields", type: "error" });
+            return;
+        }
 
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-      localStorage.setItem("token", res.data.token);
+        try {
+            const res = await axios.post("http://localhost:3001/login", {
+                username,
+                password,
+            });
 
-      window.location.href = "/home";
-    } catch {
-      setError("Invalid username or password");
-    }
-  };
+            localStorage.setItem("user", JSON.stringify(res.data.user));
+            localStorage.setItem("token", res.data.token);
 
-  return (
-    <div className="auth-page">
-      <div className="auth-overlay"></div>
+            setToast({ message: "Login successful!", type: "success" });
 
-      <div className="auth-card">
-        <Link to="/home" className="auth-close">×</Link>
+            setTimeout(() => {
+                window.location.href = "/home";
+            }, 1200);
 
-        <div className="auth-icon"></div>
-        <h1>Welcome Back!</h1>
-        <p className="auth-subtitle">Login to continue your journey</p>
+        } catch {
+            setToast({ message: "Invalid username or password", type: "error" });
+        }
+    };
 
-        <label>Username</label>
-        <input
-          placeholder="Enter your username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+    return (
+        <div className="auth-page">
+            <div className="auth-overlay"></div>
 
-        <label>Password</label>
-        <input
-          placeholder="Enter your password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+            <div className="auth-card">
+                <Link to="/home" className="auth-close">×</Link>
 
-        {error && <div className="login-error">{error}</div>}
+                <h1>Welcome Back!</h1>
+                <p className="auth-subtitle">Login to continue your journey</p>
 
-        <button onClick={login}>Login</button>
+                <label>Username</label>
+                <input
+                    placeholder="Enter your username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
 
-        <p className="auth-link-text">
-          Don't have an account? <Link to="/register">Sign Up</Link>
-        </p>
-      </div>
-    </div>
-  );
+                <label>Password</label>
+                <input
+                    placeholder="Enter your password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+
+                <button onClick={login}>Login</button>
+
+                <p className="auth-link-text">
+                    Don't have an account? <Link to="/register">Sign Up</Link>
+                </p>
+            </div>
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
+        </div>
+    );
 }
