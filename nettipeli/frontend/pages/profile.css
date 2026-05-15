@@ -140,3 +140,57 @@ body.dark .username-change input::placeholder {
 .Platinum { color: #67e8f9; }
 .Diamond { color: #60a5fa; }
 .Immortal { color: #f43f5e; }
+
+.rank-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 25px 0;
+  flex-wrap: wrap;
+}
+
+.rank-box {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 14px 20px;
+  border-radius: 14px;
+  text-align: center;
+  min-width: 120px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.rank-box span {
+  display: block;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.rank-box strong {
+  display: block;
+  font-size: 18px;
+  margin-top: 4px;
+}
+
+.rank-box.Gold {
+  color: #facc15;
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.3);
+}
+
+.rank-box.Platinum {
+  color: #67e8f9;
+  box-shadow: 0 0 10px rgba(103, 232, 249, 0.3);
+}
+
+.rank-box.Diamond {
+  color: #60a5fa;
+  box-shadow: 0 0 12px rgba(96, 165, 250, 0.4);
+}
+
+.rank-box.Immortal {
+  color: #f43f5e;
+  box-shadow: 0 0 15px rgba(244, 63, 94, 0.5);
+}
+
+.rank-box:hover {
+  transform: translateY(-3px) scale(1.03);
+}

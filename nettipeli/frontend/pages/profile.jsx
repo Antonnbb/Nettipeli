@@ -59,16 +59,25 @@ export default function Profile() {
                             Change Username
                         </button>
                     </div>
-                    <p className={`rank ${aimRank}`}>
-                        {getRankIcon(aimRank)} Aim Rank: {aimRank}
-                    </p>
+                    <div className="rank-container">
+                        <div className={`rank-box ${reactionRank}`}>
+                            ⚡ {getRankIcon(reactionRank)}
+                            <span>Reaction</span>
+                            <strong>{reactionRank}</strong>
+                        </div>
 
-                    <p className={`rank ${trackingRank}`}>
-                        {getRankIcon(trackingRank)} Tracking Rank: {trackingRank}
-                    </p>
-                    <p className={`rank ${reactionRank}`}>
-                        {getRankIcon(reactionRank)} Reaction Rank: {reactionRank}
-                    </p>
+                        <div className={`rank-box ${aimRank}`}>
+                            🎯 {getRankIcon(aimRank)}
+                            <span>Aim</span>
+                            <strong>{aimRank}</strong>
+                        </div>
+
+                        <div className={`rank-box ${trackingRank}`}>
+                            ◎ {getRankIcon(trackingRank)}
+                            <span>Tracking</span>
+                            <strong>{trackingRank}</strong>
+                        </div>
+                    </div>
                     <div className="profile-stats">
                         <div>
                             <span>⚡</span>
