@@ -133,3 +133,10 @@ body.dark .username-change input {
 body.dark .username-change input::placeholder {
   color: #cbd5e1;
 }
+
+.Bronze { color: #cd7f32; }
+.Silver { color: #c0c0c0; }
+.Gold { color: #facc15; }
+.Platinum { color: #67e8f9; }
+.Diamond { color: #60a5fa; }
+.Immortal { color: #f43f5e; }
