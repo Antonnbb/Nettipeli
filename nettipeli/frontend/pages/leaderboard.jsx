@@ -32,6 +32,11 @@ export default function Leaderboard({ game }) {
 
                   {game === "reaction" ? (
                     <th>Reaction Time</th>
+                  ) : game === "aim" ? (
+                    <>
+                      <th>Hits</th>
+                      <th>Accuracy</th>
+                    </>
                   ) : (
                     <>
                       <th>Score</th>
@@ -43,8 +48,10 @@ export default function Leaderboard({ game }) {
 
               <tbody>
                 {scores.map((s, i) => (
-                  <tr key={i}>
-                    <td>{i + 1}</td>
+                  <tr className={`rank-${i + 1}`} key={i}>
+                    <td>
+                      {i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : i + 1}
+                    </td>
                     <td>{s.profiles?.username || "Unknown"}</td>
 
                     {game === "reaction" ? (
