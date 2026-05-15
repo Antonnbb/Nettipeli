@@ -76,7 +76,7 @@ app.get("/scores/:game", async (req, res) => {
     const { game } = req.params;
 
     let orderBy = "score";
-    if (game === "aim") orderBy = "accuracy";
+    if (game === "aim") orderBy = "score";
     if (game === "reaction") orderBy = "reaction_time";
 
     const { data, error } = await supabase
