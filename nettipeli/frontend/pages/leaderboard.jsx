@@ -32,6 +32,11 @@ export default function Leaderboard({ game }) {
 
                   {game === "reaction" ? (
                     <th>Reaction Time</th>
+                  ) : game === "aim" ? (
+                    <>
+                      <th>Hits</th>
+                      <th>Accuracy</th>
+                    </>
                   ) : (
                     <>
                       <th>Score</th>
